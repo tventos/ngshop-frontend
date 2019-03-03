@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Test product",
+    "description": "Description!!!",
+    "price": 1000
+  },{
+    "id": 2,
+    "name": "Test product #2",
+    "description": "Description #2",
+    "price": 1500
+  },{
+    "id": 3,
+    "name": "Test product #3",
+    "description": "Description #3",
+    "price": 3000
+  }
+]
