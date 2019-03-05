@@ -19,13 +19,11 @@ export class CartService {
         let exists = false;
 
         this.products = this.products.map(_product => {
-            if(_product.product.id == product.id){
+            if(_product.product._id == product._id){
                 if (from == 'category') {
                     _product.quantity += quantity;
                 } else {
-                    if (quantity == 0) {
-                        this.removeProduct(_product.product);
-                    } else {
+                    if (quantity > 0) {
                         _product.quantity = quantity;
                     }
                 }
@@ -61,7 +59,7 @@ export class CartService {
         }
 
         for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].product.id === product.id) {
+            if (this.products[i].product._id === product._id) {
                 this.cartCost -= this.products[i].product.price * this.products[i].quantity;
 
                 this.products.splice(i, 1);

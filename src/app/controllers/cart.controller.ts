@@ -59,7 +59,7 @@ import * as cartActions from '../store/actions/cart.action';
                         
                     </td>
                     <td>
-                        <b>Итого:</b>
+                        <b class="float-right">Итого:</b>
                     </td>
                     <td colspan="2">
                         {{cartCost$ | async}} ₽
