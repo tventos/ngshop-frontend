@@ -1,20 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
-import { environment } from "../../environments/environment";
+
+import { Apollo } from "apollo-angular";
+import gql from 'graphql-tag';
 
 @Injectable({providedIn: 'root'})
 export class ProductService {
-    private apiUrl = environment.apiUrl;
-    private productController = "products";
-
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        private apollo: Apollo
+    ) {}
 
     getProducts(): Observable<any> {
-        return this.http
-            .get(this.apiUrl + this.productController)
-            .pipe(catchError((error: any) => Observable.throw(error.json())));
+        return this.apollo.watchQuery<any>({
+            query: gql`
+                {
+                  products(limit: 6) {
+                    _id,
+                    name,
+                    uri,
+                    description
+                    category {
+                      _id,
+                      name,
+                      uri
+                    }
+                  }
+                }
+            `
+        }).valueChanges.pipe(
+            map(result => result.data.products)
+        )
     }
 }
