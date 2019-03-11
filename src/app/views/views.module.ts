@@ -4,11 +4,13 @@ import { RouterModule } from '@angular/router';
 
 import { ProductsItem, ProductsList } from './products';
 import { Minicart } from './cart';
+import { CatalogItem } from "./catalog";
 
 const VIEWS = [
     ProductsItem,
     ProductsList,
-    Minicart
+    Minicart,
+    CatalogItem
 ];
 
 @NgModule({

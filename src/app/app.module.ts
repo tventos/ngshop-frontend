@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { environment } from "../environments/environment";
 
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http'
@@ -14,17 +15,24 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers  } from './store/reducers';
 import { effects } from './store/effects';
 
-import { environment } from "../environments/environment";
 import { ViewsModule } from './views/views.module';
-import { HeaderLayout } from './layouts';
-import { HomeController, CartController } from './controllers';
+import { HeaderLayout } from './views/layouts';
 import { AppComponent } from './app.component';
+
+import {
+  HomeController,
+  CartController,
+  CatalogController,
+  CatalogViewController
+} from './controllers';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeController,
     CartController,
+    CatalogController,
+    CatalogViewController,
     HeaderLayout
   ],
   imports: [

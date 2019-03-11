@@ -1,0 +1,16 @@
+ul.navbar-nav {
+  position: relative;
+
+  li {
+    ul {
+      display: none;
+      position: absolute;
+    }
+
+    &:hover {
+      > ul {
+        display: block;
+      }
+    }
+  }
+}

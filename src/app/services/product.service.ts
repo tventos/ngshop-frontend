@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
 
 import { Apollo } from "apollo-angular";
@@ -10,7 +9,6 @@ import gql from 'graphql-tag';
 @Injectable({providedIn: 'root'})
 export class ProductService {
     constructor(
-        private http: HttpClient,
         private apollo: Apollo
     ) {}
 
@@ -18,21 +16,20 @@ export class ProductService {
         return this.apollo.watchQuery<any>({
             query: gql`
                 {
-                  products(limit: 6) {
-                    _id,
-                    name,
-                    uri,
-                    description
-                    category {
-                      _id,
-                      name,
-                      uri
+                    products {
+                        list {
+                          _id,
+                          name,
+                          description,
+                          price
+                        },
+                        count,
+                        countTotal
                     }
-                  }
                 }
             `
         }).valueChanges.pipe(
-            map(result => result.data.products)
+            map(result => result.data.products.list)
         )
     }
 }

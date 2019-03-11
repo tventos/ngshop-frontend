@@ -7,7 +7,7 @@ import { Product } from '../../models';
     template: `
         <div class="container">
             <div class="row">
-                <app-products-item *ngFor="let product of products" [product]="product" class="col-md-4"></app-products-item>
+                <app-products-item *ngFor="let product of products" [product]="product" class="col-md-3"></app-products-item>
             </div>
         </div>
     `
