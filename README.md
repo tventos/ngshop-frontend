@@ -1,6 +1,10 @@
-# Ngshop with Ngrx-store and effects
+# Ngshop
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.2.
+
+## Backend
+
+Here: https://github.com/tventos/ngshop-backend
 
 ## Development server
 
