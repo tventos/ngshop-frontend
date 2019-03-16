@@ -12,14 +12,33 @@ export class ProductService {
         private apollo: Apollo
     ) {}
 
-    getProducts(): Observable<any> {
+    getProducts(action): Observable<any> {
+        let category_id = JSON.stringify(action.payload.category_id);
+        let limit = JSON.stringify(action.payload.limit) ? JSON.stringify(action.payload.limit) : 12;
+        let offset = JSON.stringify(action.payload.offset) ? JSON.stringify(action.payload.offset) : 0;
+        let filter = "";
+
+        if (JSON.stringify(action.payload.input).length > 3) {
+            if (JSON.stringify(action.payload.input.name).length > 1) {
+                filter += 'name: "' + action.payload.input.name +'"';
+            }
+        }
+
         return this.apollo.watchQuery<any>({
             query: gql`
                 {
-                    products {
+                    products(
+                        category_id: ${category_id}, 
+                        limit: ${limit}, 
+                        offset: ${offset}, 
+                        input: {
+                            ${filter}
+                        }
+                    ) {
                         list {
                           _id,
                           name,
+                          uri,
                           description,
                           price
                         },

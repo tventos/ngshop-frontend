@@ -7,11 +7,12 @@ export const LOAD_PRODUCTS_FAIL = '[Products] Load fail';
 export class LoadProducts implements Action {
     readonly type = LOAD_PRODUCTS;
 
-    public payload: any;
+    constructor(public payload: any = '') {}
 }
 
 export class LoadProductsSuccess implements Action {
     readonly type = LOAD_PRODUCTS_SUCCESS;
+
     constructor(public payload: any) {}
 }
 

@@ -17,12 +17,16 @@ const routes: Routes = [
         component: CartController,
     },
     {
-        path: 'catalog',
-        component: CatalogController,
-    },
-    {
         path: 'catalog/:uri',
         component: CatalogViewController,
+    },
+    {
+        path: 'catalog/:uri/:uri',
+        component: HomeController,
+    },
+    {
+        path: 'catalog',
+        component: CatalogController,
     }
 ];
 

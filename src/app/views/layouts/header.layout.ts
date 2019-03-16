@@ -19,7 +19,7 @@ import * as catalogActions from "../../store/actions/catalog.action";
                                 Каталог <span class="sr-only"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <a *ngFor="let category of categories$ | async" class="dropdown-item" routerLink="/catalog/{{category.uri}}">{{category.name}}</a>
+                                <a *ngFor="let category of categories$ | async" queryParamsHandling="merge" class="dropdown-item" [routerLink]="['/catalog/', category.uri]">{{category.name}}</a>
                             </ul>
                         </li>    
                     </ul>

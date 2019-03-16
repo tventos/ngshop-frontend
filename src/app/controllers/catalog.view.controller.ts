@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import * as fromRoot from '../store/reducers';
 import * as catalogActions from '../store/actions/catalog.action';
-import * as fromModels from '../models';
+import * as productActions from '../store/actions/products.action';
 
 @Component({
     selector: 'app-catalog-view-controller',
@@ -16,6 +16,8 @@ import * as fromModels from '../models';
               {{(category$ | async)?.name}}
           </h1>
       </div>
+
+      <app-products-list [products]="products$ | async"></app-products-list>
   `,
 })
 export class CatalogViewController {
@@ -23,6 +25,7 @@ export class CatalogViewController {
     private uri: string;
 
     category$: Observable<any>;
+    products$: Observable<any>;
 
     constructor(
         private store: Store<fromRoot.State>,
@@ -30,11 +33,36 @@ export class CatalogViewController {
         private router: Router,
         private titleService: Title
     ) {
-        this.routeSubscription = route.params.subscribe(params=>this.uri = params['uri']);
-        this.store.dispatch(new catalogActions.LoadCategory({"uri": this.uri}));
+        this.routeSubscription = route.params.subscribe(params => {
+            this.uri = params['uri'];
+        });
+    }
 
-        this.category$ = store.select(fromRoot.getCategory);
+    ngOnInit() {
 
-        this.titleService.setTitle('Категория');
+        this.route.params.forEach(params => {
+            this.store.dispatch(new catalogActions.LoadCategory({"uri": this.uri}));
+            this.category$ = this.store.select(fromRoot.getCategory);
+            this.loadProducts({});
+        });
+    }
+
+    ngOnDestroy(){
+        let destroy = this.category$.subscribe();
+        destroy.unsubscribe();
+    }
+
+    loadProducts(input: any = '', limit: number = 12, offset: number = 0) {
+        console.log(JSON.stringify(input));
+
+        this.category$.pipe().subscribe(res => {
+            if (res) {
+                let obj = JSON.parse(JSON.stringify(res));
+                this.titleService.setTitle(obj.name);
+
+                this.store.dispatch(new productActions.LoadProducts({category_id: obj._id, limit:limit, offset: offset, input: input}));
+                this.products$ = this.store.select(fromRoot.getProducts);
+            }
+        });
     }
 }

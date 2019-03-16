@@ -34,6 +34,7 @@ export class CatalogService {
             query: gql`
                 {
                   category(uri:"${uri}") {
+                    _id,
                     name,
                     uri
                   }

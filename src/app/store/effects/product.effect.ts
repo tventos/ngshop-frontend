@@ -15,9 +15,9 @@ export class ProductEffects {
 
     @Effect()
     loadProducts$ = this.actions$.pipe(ofType(productActions.LOAD_PRODUCTS),
-        switchMap(() => {
+        switchMap((action) => {
             return this.productService
-                .getProducts()
+                .getProducts(action)
                 .pipe(
                     map(products => new productActions.LoadProductsSuccess(products)),
                     catchError(error => of(new productActions.LoadProductsFail(error)))
